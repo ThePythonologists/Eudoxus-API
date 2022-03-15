@@ -66,9 +66,9 @@ else:
 wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')
 #driver.refresh()
 user_field = driver.find_element_by_id('username')
-user_field.send_keys('inf2021098')
+user_field.send_keys('username')
 pass_field = driver.find_element_by_id('password')
-pass_field.send_keys('Mairaki2003!')
+pass_field.send_keys('passwd')
 buttons = driver.find_elements_by_id('submitForm')[0].click()
 
 
