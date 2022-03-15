@@ -22,10 +22,9 @@ sleep(.5)
 driver.find_element_by_link_text('εδώ').click()
 
 sleep(.5)
-select = wait(driver, 10).until(EC.presence_of_element_located((By.NAME, "user_idp")))
-select(select).select_by_visible_text("Ionian University")
-select(select).select_by_visible_text("Ιόνιο Πανεπιστήμιο")
-select se = new Select(driver.findElement(By.xpath("//*[@id=/"select2-user_idp-mf-result-77w3-https://idp.ionio.gr/idp/shibboleth"]']")));
+#select(select).select_by_visible_text("Ionian University")
+#select(select).select_by_visible_text("Ιόνιο Πανεπιστήμιο")
+#select se = new Select(driver.findElement(By.xpath("//*[@id=/"select2-user_idp-mf-result-77w3-https://idp.ionio.gr/idp/shibboleth"]']")));
 #set.selectByIndex(12)
 
 
