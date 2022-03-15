@@ -1,47 +1,117 @@
-from inspect import _void
+from pyvirtualdisplay import Display
 from selenium import webdriver
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from time import sleep
 
 import sys
 
-from time import sleep
+## install: sudo apt install python3-pyvirtualdisplay
+#display = Display(visible=0, size=(1680,1050))
+#display.start()
+
 driver = webdriver.Firefox()
 
-url = 'https://sso.ionio.gr/login?service=https%3A%2F%2Fidp.ionio.gr%2Fcasauth%2Ffacade%2Fnorenew%3Fidp%3Dhttps%3A%2F%2Fidp.ionio.gr%2Fidp%2FexternalAuthnCallback.html'
 url = 'https://eudoxus.gr/'
 driver.get(url)
 
-sleep(.5)
+#sleep(.1)
+wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')
 driver.find_element_by_link_text('Έλεγχος Εισόδου Φοιτητή').click()
 
-sleep(.5)
+#sleep(.1)
+wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')
 driver.find_element_by_link_text('εδώ').click()
 
-sleep(.5)
-#select(select).select_by_visible_text("Ionian University")
-#select(select).select_by_visible_text("Ιόνιο Πανεπιστήμιο")
-#select se = new Select(driver.findElement(By.xpath("//*[@id=/"select2-user_idp-mf-result-77w3-https://idp.ionio.gr/idp/shibboleth"]']")));
-#set.selectByIndex(12)
+#sleep(.1)
+wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')
+try:
+    driver.find_element_by_link_text('Ελληνικά').click()
+except:
+    pass
 
+#sleep(.1)
+wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')
+# select = wait(driver, 10).until(EC.presence_of_element_located((By.NAME, "user_idp")))
+# Select(select).select_by_visible_text("Ιόνιο Πανεπιστήμιο")
 
 arrow = driver.find_elements_by_class_name('select2-selection__arrow')
-print(type(arrow[0]))
-for n in arrow:
-    print(n)
 arrow[0].click()
 #sys.exit()
 
-sleep(.5)
+#sleep(.1)
+wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')
 
-select = Select(driver.find_element_by_name("user_idp"))
-#wait(driver, 30).until(EC.element_to_be_clickable((By.NAME, "user_idp")))
+li = driver.find_elements_by_tag_name('li')
+for n in li:
+    #print(n.text + '\n')
+    if n.text == 'Ιόνιο Πανεπιστήμιο':
+        n.click()
+        break
 
-#driver.find_element_by_name("user_idp").click()
-sleep(.5)
-select.select_by_index(2)
+#sleep(.1)
+wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')
+buttons = driver.find_elements_by_tag_name('button')
+if len(buttons) == 1:
+    buttons[0].click()
+else:
+    for n in buttons:
+        if n.text == 'Επιβεβαίωση':
+            n.click()
+            break
+
+#sleep(.1)
+wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')
+#driver.refresh()
+user_field = driver.find_element_by_id('username')
+user_field.send_keys('inf2021098')
+pass_field = driver.find_element_by_id('password')
+pass_field.send_keys('Mairaki2003!')
+buttons = driver.find_elements_by_id('submitForm')[0].click()
 
 
+wait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'td')))
+td = driver.find_elements_by_tag_name('td')[:10]
+out = {}
+for i,n in enumerate(td):
+    if i % 2 == 0:
+        key = n.text
+    else:
+        out[key] = n.text
+print(out)
+print('\n')
+for n in out.keys():
+    print('{0} {1}'.format(n, out[n]))
+print('\n')
+
+l = driver.find_elements_by_tag_name('a')
+#help(l[0])
+for n in l:
+    if 'υποβολής' in n.text:
+        n.click()
+        break
+
+sleep(3)
+#wait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'td')))
+td = driver.find_elements_by_tag_name('td')[1:-4]
+out = {}
+for i,n in enumerate(td):
+    if i % 2 == 0:
+        key = n.text
+    else:
+        out[key] = n.text
+print(out)
+print('\n')
+for n in out.keys():
+    print('{0}: {1}'.format(n, out[n]))
+
+l = driver.find_elements_by_tag_name('a')
+for n in l:
+    #print(n.text)
+    if 'Δηλώσεις Συγγραμμάτων' in n.text:
+        n.click()
+        break
+
+#driver.quit()
