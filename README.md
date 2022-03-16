@@ -5,7 +5,7 @@ Let's make our lifes easier!
 
 The Administrators of "ThePythonologists"
 
-© [Greekforce1821](https://github.com/Greekforce1821) , [Giannpavlos](https://github.com/Giannpavlos) & [R3try0](https://githun.com/R3try0) ©
+© [Greekforce1821](https://github.com/Greekforce1821) , [Giannpavlos](https://github.com/Giannpavlos) & [R3try0](https://github.com/R3try0) ©
 
 **DONATION
 
