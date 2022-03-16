@@ -8,8 +8,7 @@ The Administrators
 © Greekforce1821(https://github.com/Greekforce1821) , Giannpavlos(https://github.com/Giannpavlos) & R3try0(https://github.com/R3try0)
  ©
 
-Donation
+#DONATION
 
-If this project help you reduce time to select your canon books, you can give us a cup of coffee [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/greekforce1821)😋
-
-paypal
+If this project help you reduce time to select your canon books, you can give us a cup of coffee 
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/greekforce1821)😋
