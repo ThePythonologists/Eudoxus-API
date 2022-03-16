@@ -9,7 +9,7 @@ The Administrators of "ThePythonologists"
 
 **DONATION
 
-If this project help you reduce time to select your canon books, you can give us a cup of coffee
+If this project helped you reduce time to select your canon books, you can give us a cup of coffee!
 
 
 
