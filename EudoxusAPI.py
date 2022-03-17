@@ -1,4 +1,3 @@
-
 from pyvirtualdisplay import Display
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
@@ -177,14 +176,13 @@ def updates():
 
 if(platform.system() == 'Windows'):
     bla = "%username%"
-    os.system('curl '+'-LO '+'https://service.eudoxus.gr/images/eudoxus-logo.png '+'--output '+'C:\\User\\{bla}\\AppData\\Local\\EudoxusAPI\\logo.png')
+    os.system('curl '+'-L '+'https://service.eudoxus.gr/images/eudoxus-logo.png '+'-o '+'C:\\User\\{bla}\\AppData\\Local\\EudoxusAPI\\logo.png')
 
 if platform.system() == 'Linux':
     try:
-        os.system('mkdir .EudoxusAPI && cd .EudoxusAPI')
-        os.system('curl -LO https://service.eudoxus.gr/images/eudoxus-logo.png --output logo.png' )
+        os.system('mkdir $home.EudoxusAPI && cd $home.EudoxusAPI')
+        os.system('curl -L https://service.eudoxus.gr/images/eudoxus-logo.png -o logo.png' )
     except:
-        os.system(f'cd $home.EudoxusAPI')
         if os.system('whoami') == 'root\n0':
             os.system('cd /root/.EudoxusAPI')
         pass
