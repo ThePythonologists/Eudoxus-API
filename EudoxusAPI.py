@@ -185,10 +185,8 @@ if platform.system() == 'Linux':
         os.system('mkdir .EudoxusAPI && cd .EudoxusAPI')
         os.system('curl -LO https://service.eudoxus.gr/images/eudoxus-logo.png --output logo.png' )
     except:
-        if sysuname != 'root':
-            os.system(f'cd $home.EudoxusAPI')
-        else:
-            os.system('/root/.EudoxusAPI')
+        os.system(f'cd $home.EudoxusAPI')
+        os.system('/root/.EudoxusAPI')
         pass
 
 root = Tk()
