@@ -194,7 +194,7 @@ root.geometry("500x500")
 root.wm_title('EudoxusAPI')
 root.resizable(0, 0)
 if platform.system() == 'Linux':
-    img = ImageTk.PhotoImage(Image.open("$home.EudoxusAPI/logo.png"))
+    img = ImageTk.PhotoImage(Image.open("logo.png"))
 
 
 if platform.system() == 'Windows':
