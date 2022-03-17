@@ -5,10 +5,9 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait as wait
 import tkinter
 import os
-from Crypto.Cipher import AES
+#from Crypto.Cipher import AES
 import platform
 from tkinter import *
-import webview
 import requests
 from PIL import Image, ImageTk
 import sys
@@ -186,7 +185,8 @@ if platform.system() == 'Linux':
         os.system('curl -LO https://service.eudoxus.gr/images/eudoxus-logo.png --output logo.png' )
     except:
         os.system(f'cd $home.EudoxusAPI')
-        os.system('/root/.EudoxusAPI')
+        if os.system('whoami') == 'root\n0':
+            os.system('cd /root/.EudoxusAPI')
         pass
 
 root = Tk()
@@ -194,7 +194,7 @@ root.geometry("500x500")
 root.wm_title('EudoxusAPI')
 root.resizable(0, 0)
 if platform.system() == 'Linux':
-    img = ImageTk.PhotoImage(Image.open(".EudoxusAPI/logo.png"))
+    img = ImageTk.PhotoImage(Image.open("$home.EudoxusAPI/logo.png"))
 
 
 if platform.system() == 'Windows':
