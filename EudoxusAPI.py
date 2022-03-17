@@ -196,7 +196,13 @@ root = Tk()
 root.geometry("500x500")
 root.wm_title('EudoxusAPI')
 root.resizable(0, 0)
-img = ImageTk.PhotoImage(Image.open(".EudoxusAPI/logo.png"))
+if platform.system() == 'Linux':
+    img = ImageTk.PhotoImage(Image.open(".EudoxusAPI/logo.png"))
+
+
+if platform.system() == 'Windows':
+    img = ImageTk.PhotoImage(Image.open(f"C:\\User\\{bla}\\AppData\\Local\\EudoxusAPI\\logo.png"))
+
 image = Label(root, image = img)
 
 
