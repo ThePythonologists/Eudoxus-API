@@ -9,7 +9,6 @@ from Crypto.Cipher import AES
 import platform
 from tkinter import *
 import webview
-#from PL impot Image
 import requests
 from PIL import Image, ImageTk
 import sys
