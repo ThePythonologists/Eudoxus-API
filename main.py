@@ -186,7 +186,7 @@ def Main():
 
 def exit():
     sys.exit()
-
+# Some fuctions we will use in the future later
 def bookstatus():
     return
 
@@ -194,9 +194,10 @@ def updates():
     return
 
 
-if(platform.system() == 'Windows'):
+if(platform.system() == 'Windows'): # Here we download eudoxus image from the main url of eudoxus plus we create a directory where we save some data for later use
+    os.system("mkdir C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI")
     bla = "%username%"
-    os.system('curl '+'-L '+'https://service.eudoxus.gr/images/eudoxus-logo.png '+'-o '+'C:\\User\\{bla}\\AppData\\Local\\EudoxusAPI\\logo.png')
+    os.system(f'curl -L https://service.eudoxus.gr/images/eudoxus-logo.png -o C:\\Users\\{bla}\\AppData\\Roaming\\EudoxusAPI\\logo.png')
 
 if platform.system() == 'Linux':
     try:
@@ -206,27 +207,29 @@ if platform.system() == 'Linux':
         if os.system('whoami') == 'root\n0':
             os.system('cd /root/.EudoxusAPI')
         pass
-
+# Some basic parameteres for the root window or GUI window like how big is going to be, title of the window and not allowing to the user change size of the window cause its going to break the style of it.
 root = Tk()
 root.geometry("500x500")
 root.wm_title('EudoxusAPI')
 root.resizable(0, 0)
-if platform.system() == 'Linux':
+if platform.system() == 'Linux': # Adding eudoxus image here and checking if it is windows or linux the platform that is running
     img = ImageTk.PhotoImage(Image.open("logo.png"))
 
 
 if platform.system() == 'Windows':
-    img = ImageTk.PhotoImage(Image.open(f"C:\\User\\{bla}\\AppData\\Local\\EudoxusAPI\\logo.png"))
+    os.system('cd C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI')
+    bla = "%username%"
+    img = ImageTk.PhotoImage(Image.open("logo.png"))
 
 image = Label(root, image = img)
 
-
+# Adding/configuring some buttons here
 button = Button(root, text="Login to Eudoxus", command = Main)
 button1 = Button(root, text="Exit", command = exit)
 button2 = Button(root, text="Book status", command = bookstatus)
 button3 = Button(root, text="Give me live-updates", command =updates)
 
-
+# Placing my buttons on the GUI app
 image.place(x = 70, y = 70)
 button.place(x=285, y=450)
 button1.place(x=425, y=450)
