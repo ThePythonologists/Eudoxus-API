@@ -186,7 +186,7 @@ def Main():
 
 def exit():
     sys.exit()
-
+#some fuctions we will use in the future later
 def bookstatus():
     return
 
@@ -194,7 +194,7 @@ def updates():
     return
 
 
-if(platform.system() == 'Windows'):
+if(platform.system() == 'Windows'): #here we download eudoxus image from the main url of eudoxus plus we create a directory where we save some data for later use
     os.system("mkdir C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI")
     bla = "%username%"
     os.system(f'curl -L https://service.eudoxus.gr/images/eudoxus-logo.png -o C:\\Users\\{bla}\\AppData\\Roaming\\EudoxusAPI\\logo.png')
@@ -207,12 +207,12 @@ if platform.system() == 'Linux':
         if os.system('whoami') == 'root\n0':
             os.system('cd /root/.EudoxusAPI')
         pass
-
+# some basic parameteres for the root window or GUI window like how big is going to be, title of the window and not allowing to the user change size of the window cause its going to break the style of it.
 root = Tk()
 root.geometry("500x500")
 root.wm_title('EudoxusAPI')
 root.resizable(0, 0)
-if platform.system() == 'Linux':
+if platform.system() == 'Linux': #adding eudoxus image here and checking if it is windows or linux the platform that is running
     img = ImageTk.PhotoImage(Image.open("logo.png"))
 
 
@@ -223,13 +223,13 @@ if platform.system() == 'Windows':
 
 image = Label(root, image = img)
 
-
+#adding/configuring some buttons here
 button = Button(root, text="Login to Eudoxus", command = Main)
 button1 = Button(root, text="Exit", command = exit)
 button2 = Button(root, text="Book status", command = bookstatus)
 button3 = Button(root, text="Give me live-updates", command =updates)
 
-
+# placing my buttons on the GUI app
 image.place(x = 70, y = 70)
 button.place(x=285, y=450)
 button1.place(x=425, y=450)
