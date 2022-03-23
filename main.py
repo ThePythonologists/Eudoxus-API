@@ -175,7 +175,7 @@ def Main():   #The Main Function operates the driver, the automatic sequence bet
     for n in out.keys():
         print('{0}: {1}'.format(n, out[n]))
 
-    l = driver.find_elements_by_tag_name('a') #Here the while the button is pressed the program proceeds to the states of the canon books
+    l = driver.find_elements_by_tag_name('a') #Here while the button is pressed the program proceeds to the states of the canon books
     for n in l:
         #print(n.text)
         if 'Δηλώσεις Συγγραμμάτων' in n.text:
