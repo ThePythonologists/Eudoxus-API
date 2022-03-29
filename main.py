@@ -3,22 +3,19 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-server = smtplib.SMTP(host=HOST_ADDRESS, port=HOST_PORT)
-server.starttls()
-server.login(MY_ADDRESS, MY_PASSWORD)
+server = smtplib.SMTP(host=smtp.gmail.com, port=465)
+server.login('thepythonilogists', 'mairaki2003')
 
 
 message = MIMEMultipart()
 
 
-message['From'] = MY_ADDRESS
+message['From'] = 'theputhonologists@gmail.com'
 message['To'] = RECIPIENT_ADDRESS
 message['Subject'] = "Απόθεμα Συγγραμμάτων"
 
 
 textPart = MIMEText("Ενημέρωση", '...')
-
-message.attach(textPart)
 
 server.send_message(message)
 server.quit()
