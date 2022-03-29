@@ -4,7 +4,7 @@ from email.mime.text import MIMEText
 
 
 server = smtplib.SMTP_SSL(host='smtp.gmail.com', port=465)
-server.login('thepythonilogists@gmail.com', 'mairaki2003')
+server.login('thepythonologists@gmail.com', 'mairaki2003')
 
 
 message = MIMEMultipart()
