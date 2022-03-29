@@ -190,12 +190,21 @@ def exit():
 def bookstatus():
     return
 
-def updates():
+def buttonpress():
     if platform.system() == 'Windows':
-        os.system('C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.py')
+        os.system('C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email} {books} {day}')
     if platform.system() == 'Linux':
         os.system('python3 $home.EudoxusAPI/UpdaterEu.py ')
-    return
+
+def updates():
+    Updateswindow = Toplevel(root)
+    Updateswindow.geometry("400x100")
+    Updateswindow.resizable(0, 0)
+    Updateswindow.title("Give me your email to send you the updates")
+    text = Entry(Updateswindow, width= 30)
+    text.pack()
+    Button(Updateswindow, text="Done", command=buttonpress).pack()
+    
 
 def Linences():
     Line_window = Toplevel(root)
