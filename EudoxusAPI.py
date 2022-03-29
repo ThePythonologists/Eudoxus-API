@@ -191,7 +191,36 @@ def bookstatus():
     return
 
 def updates():
+    if platform.system() == 'Windows':
+        os.system('C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.py')
+    if platform.system() == 'Linux':
+        os.system('python3 $home.EudoxusAPI/UpdaterEu.py ')
     return
+
+def Linences():
+    Line_window = Toplevel(root)
+    Line_window.title("Linences")
+    Label(Line_window,text ="""MIT License
+
+    Copyright (c) 2022 ThePythonologists
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.""").pack()
 
 
 if(platform.system() == 'Windows'): #here we download eudoxus image from the main url of eudoxus plus we create a directory where we save some data for later use
@@ -235,6 +264,14 @@ button.place(x=285, y=450)
 button1.place(x=425, y=450)
 button2.place(x=180, y=450)
 button3.place(x=10, y = 450)
+
+menubar = Menu(root)
+root.config(menu=menubar)
+about = Menu(menubar)
+menubar.add_cascade(label='About', menu = about)
+about.add_command(label="Linences", command = Linences)
+about.add_separator()
+about.add_command(label="Exit", command = exit)
 
 
 root.mainloop()
