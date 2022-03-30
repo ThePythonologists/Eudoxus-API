@@ -56,7 +56,7 @@ def email1():
 		ouremail='EudoxusAPI@outlook.com'
 		receiver= email 
 		password='' 
-		smtp_server=smtplib.SMTP("smtp.outlook.com",587)
+		smtp_server=smtplib.SMTP("smtp.office365.com",587)
 		smtp_server.ehlo() 
 		smtp_server.starttls() 
 		smtp_server.ehlo() 
