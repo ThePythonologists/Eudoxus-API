@@ -11,7 +11,7 @@ message = MIMEMultipart()
 
 
 message['From'] = 'thepythonologists@gmail.com'
-message['To'] = 'giann.pavlos@gmail.com'
+message['To'] = RECIPIENT_ADDRESS
 message['Subject'] = "Απόθεμα Συγγραμμάτων"
 
 
