@@ -11,11 +11,13 @@ message = MIMEMultipart()
 
 
 message['From'] = 'thepythonologists@gmail.com'
-message['To'] = RECIPIENT_ADDRESS
+message['To'] = 'giann.pavlos@gmail.com'
 message['Subject'] = "Απόθεμα Συγγραμμάτων"
 
 
-textPart = MIMEText("Ενημέρωση", '...')
+textPart = MIMEText("Χαίρεται φοιτητή/φοιτή,\n Σου αποστέλλουμε τα δεδομένα που συλλέξαμε από την βάση δεδομένων του Ευδόξου για την άμεση ενημέρωση σου σχετικά με τα παρακάτω συγγράμματα:", 'plain')
+
+message.attach(textPart)
 
 server.send_message(message)
 server.quit()
