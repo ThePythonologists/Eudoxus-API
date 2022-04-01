@@ -190,25 +190,25 @@ def exit():
 def bookstatus():
     return
 
-def buttonpress():
-    if platform.system() == 'Windows':
+def buttonpress(): # this "buttonpress" actually starts/triggers/calls the program UpdaterEu 
+    if platform.system() == 'Windows': # of course we check to see if the platform is windows or linux
         os.system('C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email} {books} {day}')
-    if platform.system() == 'Linux':
+    if platform.system() == 'Linux': # Cause "A linux computer is like air conditioning - it becomes useless when you open Windows. " — Linus T.
         os.system('python3 $home.EudoxusAPI/UpdaterEu.py ')
 
-def updates():
+def updates(): # here we create another window thats going to ask the user for there email so we can send them live updates about there books
     Updateswindow = Toplevel(root)
     Updateswindow.geometry("400x100")
     Updateswindow.resizable(0, 0)
-    Updateswindow.title("Give me your email to send you the updates")
+    Updateswindow.title("Give us your email to send you updates")
     text = Entry(Updateswindow, width= 30)
     text.pack()
-    Button(Updateswindow, text="Done", command=buttonpress).pack()
+    Button(Updateswindow, text="Done", command=buttonpress).pack()# this part is where we start another program (UpdaterEu.py)
     
 
-def Linences():
+def Linences(): # well when we create the menu we have an option thats called "Licenses" well it does what it says shows you the licenses
     Line_window = Toplevel(root)
-    Line_window.title("Linences")
+    Line_window.title("Licenses")
     Label(Line_window,text ="""MIT License
 
     Copyright (c) 2022 ThePythonologists
@@ -273,7 +273,7 @@ button.place(x=285, y=450)
 button1.place(x=425, y=450)
 button2.place(x=180, y=450)
 button3.place(x=10, y = 450)
-
+#here we create a menu where we added an "About" options for viewing licenses and exit (this menu will become usefull in the futere)
 menubar = Menu(root)
 root.config(menu=menubar)
 about = Menu(menubar)
