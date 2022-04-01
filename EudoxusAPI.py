@@ -278,7 +278,7 @@ menubar = Menu(root)
 root.config(menu=menubar)
 about = Menu(menubar)
 menubar.add_cascade(label='About', menu = about)
-about.add_command(label="Linences", command = Linences)
+about.add_command(label="Licenses", command = Licenses)
 about.add_separator()
 about.add_command(label="Exit", command = exit)
 
