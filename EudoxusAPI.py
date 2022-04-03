@@ -17,11 +17,62 @@ import sys
 #from pyvirtualdisplay import Display
 #display = Display(visible=0, size=(1680,1050))
 #display.start()
+
+##########################################
+#### The Creation of our Dictionary   ####                               
+#### which keeps the information that ####                        
+#### our program will use later       ####
+##########################################
+
 def to_dict(a):
     it = iter(a)
     res_dct = dict(zip(it, it))
     return res_dct
-    
+
+################################################
+#### The def "get history_table_and_buttons ####
+#### is required for the selenium driver    ####
+#### in order to proceed to the next urls   ####
+################################################
+
+def get_history_table_and_buttons(driver):
+    ''' reads the history table and returns a list of lists
+        Each inner list contains:
+                Ημερομηνία - text
+                Έτος       - text
+                Περίοδος   - text
+                Button     - text
+                Button     - clickable element
+    '''
+    out = []
+    the_table = None
+    tables = driver.find_elements_by_tag_name('table')
+    for a_table in tables:
+        thead = a_table.find_element_by_tag_name('thead')
+        if 'Ημερομηνία' in thead.text:
+            the_table = a_table
+            #print('table found!!!')
+            break
+    if the_table:
+        tbody = the_table.find_element_by_tag_name('tbody')
+        tr = tbody.find_elements_by_tag_name('tr')
+        for a_tr in tr:
+            new_td = []
+            td = a_tr.find_elements_by_tag_name('td')
+            for a_td in td:
+                #print(a_td.text)
+                new_td.append(a_td.text)
+                if 'Ενημέρωση' in a_td.text or \
+                        'Επισκόπηση' in a_td.text:
+                    #print('  button ')
+                    button = a_td.find_element_by_tag_name('button')
+                    new_td.append(button)
+                    #button.click()
+                    #print('  button clicked ')
+            out.append(new_td)
+    return out
+
+   
 def Main():
 
     driver = webdriver.Firefox()
@@ -183,6 +234,28 @@ def Main():
             break
 
     #driver.quit()
+    
+    ###################################
+    #### Data Extraction and Click ####
+    ###################################
+
+    data = get_history_table_and_buttons(driver)
+
+    if data:
+        print('\n\n', data)
+
+        # click last Update button
+        data[-2][-1].click()
+
+        # click Επισκόπηση
+        # data[-1][-1].click()
+
+        # walk list
+        print('\n\n')
+        for i, d in enumerate(data):
+            print('Element', i)
+            for n, dd in enumerate(d):
+                print('  data', n, ':', dd)
 
 def exit():
     sys.exit()
@@ -206,23 +279,19 @@ def updates(): # here we create another window thats going to ask the user for t
     Button(Updateswindow, text="Done", command=buttonpress).pack()# this part is where we start another program (UpdaterEu.py)
     
 
-def Linences(): # well when we create the menu we have an option thats called "Licenses" well it does what it says shows you the licenses
+def Licenses(): # well when we create the menu we have an option thats called "Licenses" well it does what it says shows you the licenses
     Line_window = Toplevel(root)
     Line_window.title("Licenses")
     Label(Line_window,text ="""MIT License
-
     Copyright (c) 2022 ThePythonologists
-
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-
     The above copyright notice and this permission notice shall be included in all
     copies or substantial portions of the Software.
-
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
