@@ -72,7 +72,41 @@ def get_history_table_and_buttons(driver):
             out.append(new_td)
     return out
 
-   
+def continue_driver(driver):
+    ''' reads the available lists and returns them
+        The specific one contains:
+               Button - text (Συνέχεια)
+               Button - clickable element
+    '''
+    out = []
+    the_table = None
+    tables = driver.find_elements_by_tag_name('table')
+    for a_table in tables:
+        thead = a_table.find_element_by_tag_name('thead')
+        if 'Τροποποίηση Δήλωσης' in thead.text:
+            the_table = a_table
+            #print('table found!!!')
+            break
+    if the_table:
+        tbody = the_table.find_element_by_tag_name('tbody')
+        tr = tbody.find_elements_by_tag_name('tr')
+        for a_tr in tr:
+            new_td = []
+            td = a_tr.find_elements_by_tag_name('td')
+            for a_td in td:
+                #print(a_td.text)
+                new_td.append(a_td.text)
+                if 'Τροποποίηση Εξαργύρωσης' in a_td.text or \
+                        'Συνέχεια' in a_td.text:
+                    #print('  button ')
+                    button = a_td.find_element_by_tag_name('button')
+                    new_td.append(button)
+                    #button.click()
+                    #print('  button clicked ')
+            out.append(new_td)
+    return out
+    
+    
 def Main():
 
     driver = webdriver.Firefox()
@@ -175,9 +209,9 @@ def Main():
             #print('finally 6')
             if user_field:
                 break
-    user_field.send_keys('')
+    user_field.send_keys('inf2021098')
     pass_field = driver.find_element_by_id('password')
-    pass_field.send_keys('')
+    pass_field.send_keys('Mairaki2003!')
     buttons = driver.find_elements_by_id('submitForm')[0].click()
 
 
