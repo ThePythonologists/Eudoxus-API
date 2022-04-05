@@ -209,9 +209,9 @@ def Main():
             #print('finally 6')
             if user_field:
                 break
-    user_field.send_keys('inf2021098')
+    user_field.send_keys('')
     pass_field = driver.find_element_by_id('password')
-    pass_field.send_keys('Mairaki2003!')
+    pass_field.send_keys('')
     buttons = driver.find_elements_by_id('submitForm')[0].click()
 
 
