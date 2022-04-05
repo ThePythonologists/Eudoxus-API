@@ -3,7 +3,7 @@
 
 Must have installed on your computer 
 - pip
-- python
+- Python
 
 The required packages exist in the file named "requirements.txt" To install them run the following command
 ```
