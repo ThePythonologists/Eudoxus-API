@@ -291,6 +291,9 @@ def Main():
             for n, dd in enumerate(d):
                 print('  data', n, ':', dd)
 
+ #driver.quit()
+
+
 def exit():
     sys.exit()
 #some fuctions we will use in the future later
