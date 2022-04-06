@@ -1,11 +1,11 @@
 # Eudoxus API App
 ## Installation 
 
-Must have installed on your computer 
-- pip
+Must have installed on your computer: 
+- Pip
 - Python
 
-The required packages exist in the file named "requirements.txt" To install them run the following command
+The required packages exist in the file named "requirements.txt" To install them run the following command:
 ```
 pip install -r requirements.txt
 ```
