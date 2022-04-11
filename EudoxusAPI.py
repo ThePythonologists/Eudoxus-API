@@ -360,8 +360,8 @@ def Licenses(): # well when we create the menu we have an option thats called "L
     SOFTWARE.""").pack()
 
 def check(): # checking the anwser
-    if username == None :
-        if password == None :
+    if username == ".!toplevel.!entry" :
+        if password == ".!toplevel.!entry" :
             question = messagebox.showerror("Error","You didn't gave us your username or password or none of them")
             PreMain()
     else:
@@ -374,8 +374,6 @@ def PreMain(): # here we are capturing (while we are asking the user) for his pa
         global password
         global username
         global secwind
-        password = None
-        username = None
         secwind = Toplevel(root)
         secwind.title("Login")
         secwind.geometry("350x100")
