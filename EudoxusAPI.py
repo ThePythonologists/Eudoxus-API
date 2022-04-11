@@ -359,20 +359,21 @@ def Licenses(): # well when we create the menu we have an option thats called "L
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.""").pack()
 
-def check(secwind1): # checking the anwser
+def check(): # checking the anwser
     if username == None :
         if password == None :
             question = messagebox.showerror("Error","You didn't gave us your username or password or none of them")
             PreMain()
-        else:
-            secwind1.destroy()
-            Encrypt()
-            Main()
+    else:
+        secwind1.destroy()
+        Encrypt()
+        Main()
 
 def PreMain(): # here we are capturing (while we are asking the user) for his password and username if they dont want there credentials to be saved in there disk (and yes they are encrypted) we go to the Main code in which is the def Main()
     if question == 1:
         global password
         global username
+        global secwind
         password = None
         username = None
         secwind = Toplevel(root)
@@ -382,10 +383,10 @@ def PreMain(): # here we are capturing (while we are asking the user) for his pa
         Label(secwind, text = "password").place(x=0, y=25)
         username = Entry(secwind, width= 20)
         password = Entry(secwind, show="*", width= 20)
+        butt0n = Button(secwind, text="Done", command = check)
         username.pack()
         password.pack()
-        button = Button(secwind, text="Done", command = lambda : check(secwind))
-        button.pack()
+        butt0n.pack()
     else:
         Main()
 
