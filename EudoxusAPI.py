@@ -365,7 +365,7 @@ def check(): # checking the anwser
             question = messagebox.showerror("Error","You didn't gave us your username or password or none of them")
             PreMain()
     else:
-        secwind1.destroy()
+        secwind.destroy()
         Encrypt()
         Main()
 
