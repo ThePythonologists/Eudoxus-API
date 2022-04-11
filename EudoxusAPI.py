@@ -4,9 +4,9 @@ from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from time import sleep
+from tkinter import messagebox
 import tkinter
 import os
-#from Crypto.Cipher import AES
 import platform
 from tkinter import *
 import requests
@@ -19,8 +19,8 @@ import sys
 #display.start()
 
 ##########################################
-#### The Creation of our Dictionary   ####                               
-#### which keeps the information that ####                        
+#### The Creation of our Dictionary   ####
+#### which keeps the information that ####
 #### our program will use later       ####
 ##########################################
 
@@ -72,7 +72,41 @@ def get_history_table_and_buttons(driver):
             out.append(new_td)
     return out
 
-   
+def continue_driver(driver):
+    ''' reads the available lists and returns them
+        The specific one contains:
+               Button - text (Συνέχεια)
+               Button - clickable element
+    '''
+    out = []
+    the_table = None
+    tables = driver.find_elements_by_tag_name('table')
+    for a_table in tables:
+        thead = a_table.find_element_by_tag_name('thead')
+        if 'Τροποποίηση Δήλωσης' in thead.text:
+            the_table = a_table
+            #print('table found!!!')
+            break
+    if the_table:
+        tbody = the_table.find_element_by_tag_name('tbody')
+        tr = tbody.find_elements_by_tag_name('tr')
+        for a_tr in tr:
+            new_td = []
+            td = a_tr.find_elements_by_tag_name('td')
+            for a_td in td:
+                #print(a_td.text)
+                new_td.append(a_td.text)
+                if 'Τροποποίηση Εξαργύρωσης' in a_td.text or \
+                        'Συνέχεια' in a_td.text:
+                    #print('  button ')
+                    button = a_td.find_element_by_tag_name('button')
+                    new_td.append(button)
+                    #button.click()
+                    #print('  button clicked ')
+            out.append(new_td)
+    return out
+
+
 def Main():
 
     driver = webdriver.Firefox()
@@ -234,7 +268,7 @@ def Main():
             break
 
     #driver.quit()
-    
+
     ###################################
     #### Data Extraction and Click ####
     ###################################
@@ -257,13 +291,20 @@ def Main():
             for n, dd in enumerate(d):
                 print('  data', n, ':', dd)
 
+ #driver.quit()
+def Decrypt():
+    if(platform.system() == 'Windows'):
+            os.system("cipher /A /D C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log")
+    if platform.system() == 'Linux':
+            os.system(" openssl enc -aes-256-cbc -d -in $home.EudoxusAPI/credits.log.dat -out $home.EudoxusAPI/credits.log")
+
 def exit():
     sys.exit()
 #some fuctions we will use in the future later
 def bookstatus():
     return
 
-def buttonpress(): # this "buttonpress" actually starts/triggers/calls the program UpdaterEu 
+def buttonpress(): # this "buttonpress" actually starts/triggers/calls the program UpdaterEu
     if platform.system() == 'Windows': # of course we check to see if the platform is windows or linux
         os.system('C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email} {books} {day}')
     if platform.system() == 'Linux': # Cause "A linux computer is like air conditioning - it becomes useless when you open Windows. " — Linus T.
@@ -277,7 +318,24 @@ def updates(): # here we create another window thats going to ask the user for t
     text = Entry(Updateswindow, width= 30)
     text.pack()
     Button(Updateswindow, text="Done", command=buttonpress).pack()# this part is where we start another program (UpdaterEu.py)
-    
+
+def Encrypt():
+    if(platform.system() == 'Windows'):
+            fp = open("C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log", "w+")
+            fp.write(password)
+            fp.write(" \n")
+            fp.wite(username)
+            fp.close()
+            os.system("cipher /A /E C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log")
+            os.system("del C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log")
+    if platform.system() == 'Linux':
+            fp = open("$home.EudoxusAPI/credits.log", "w+")
+            fp.write(password)
+            fp.write(" \n")
+            fp.wite(username)
+            fp.close()
+            os.system(" openssl enc -aes-256-cbc -in $home.EudoxusAPI/credits.log -out $home.EudoxusAPI/credits.log.dat")
+            os.system("rm $home.EudoxusAPI/credits.log")
 
 def Licenses(): # well when we create the menu we have an option thats called "Licenses" well it does what it says shows you the licenses
     Line_window = Toplevel(root)
@@ -299,6 +357,38 @@ def Licenses(): # well when we create the menu we have an option thats called "L
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.""").pack()
+
+def check(): # checking the anwser
+    if username or password == NULL :
+        question = messagebox.showerror("Error","You didn't gave us your username or password or none of them")
+        PreMain()
+    else:
+        secwind.destroy()
+        Main()
+
+def PreMain1():# Just a message box to ask the user
+    global question
+    question = messagebox.askyesno("QUESTION","Do you want to save your password and username so you don't have to login again?")
+    question2 = messagebox.showwarning("Attention !","On a moment you will see your browser poping up and doing stuff automatically , dont worry this is just a normal process of this program")
+    PreMain()
+
+def PreMain(): # here we are capturing (while we are asking the user) for his password and username if they dont want there credentials to be saved in there disk (and yes they are encrypted) we go to the Main code in which is the def Main()
+    if question == 1:
+        global password
+        global username
+        secwind = Toplevel(root)
+        secwind.title("Login")
+        secwind.geometry("350x100")
+        Label(secwind, text = "username").place(x=0, y=1)
+        Label(secwind, text = "password").place(x=0, y=25)
+        username = Entry(secwind, width= 20)
+        password = Entry(secwind, show="*", width= 20)
+        username.pack()
+        password.pack()
+        button = Button(secwind, text="Done", command = check)
+        button.pack()
+    else:
+        Main()
 
 
 if(platform.system() == 'Windows'): #here we download eudoxus image from the main url of eudoxus plus we create a directory where we save some data for later use
@@ -331,7 +421,7 @@ if platform.system() == 'Windows':
 image = Label(root, image = img)
 
 #adding/configuring some buttons here
-button = Button(root, text="Login to Eudoxus", command = Main)
+button = Button(root, text="Login to Eudoxus", command = PreMain1)
 button1 = Button(root, text="Exit", command = exit)
 button2 = Button(root, text="Book status", command = bookstatus)
 button3 = Button(root, text="Give me live-updates", command =updates)
@@ -342,7 +432,7 @@ button.place(x=285, y=450)
 button1.place(x=425, y=450)
 button2.place(x=180, y=450)
 button3.place(x=10, y = 450)
-#here we create a menu where we added an "About" options for viewing licenses and exit (this menu will become usefull in the futere)
+#here we create a menu where we added an "About" options for viewing licenses and exit (this menu will become usefull in the future)
 menubar = Menu(root)
 root.config(menu=menubar)
 about = Menu(menubar)
