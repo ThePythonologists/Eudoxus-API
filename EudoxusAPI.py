@@ -359,9 +359,10 @@ def Licenses(): # well when we create the menu we have an option thats called "L
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.""").pack()
 
-def check(): # checking the anwser
-    if username == ".!toplevel.!entry" :
-        if password == ".!toplevel.!entry" :
+def check(user,passw): # checking the anwser
+    username1 = len(user.get())
+    password1 = len(passw.get())
+    if username1 == 0 or password1 == 0 :
             question = messagebox.showerror("Error","You didn't gave us your username or password or none of them")
             PreMain()
     else:
@@ -379,11 +380,13 @@ def PreMain(): # here we are capturing (while we are asking the user) for his pa
         secwind.geometry("350x100")
         Label(secwind, text = "username").place(x=0, y=1)
         Label(secwind, text = "password").place(x=0, y=25)
-        username = Entry(secwind, width= 20)
-        password = Entry(secwind, show="*", width= 20)
-        butt0n = Button(secwind, text="Done", command = check)
-        username.pack()
-        password.pack()
+        usernamewiget = Entry(secwind, width= 20)
+        passwordwiget = Entry(secwind, show="*", width= 20)
+        username = usernamewiget.get()
+        password = passwordwiget.get()
+        butt0n = Button(secwind, text="Done", command = lambda: check(usernamewiget,passwordwiget))
+        usernamewiget.pack()
+        passwordwiget.pack()
         butt0n.pack()
     else:
         Main()
