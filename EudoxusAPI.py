@@ -321,7 +321,7 @@ def updates(): # here we create another window thats going to ask the user for t
 
 def Encrypt():
     if(platform.system() == 'Windows'):
-            fp = open("C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log", "w+")
+            fp = open("C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log", "w")
             fp.write(password)
             fp.write(" \n")
             fp.wite(username)
@@ -329,13 +329,14 @@ def Encrypt():
             os.system("cipher /A /E C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log")
             os.system("del C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log")
     if platform.system() == 'Linux':
-            fp = open("$home.EudoxusAPI/credits.log", "w+")
+            fp = open("~/.EudoxusAPI/credits.log", "w")
             fp.write(password)
             fp.write(" \n")
             fp.wite(username)
             fp.close()
             os.system(" openssl enc -aes-256-cbc -in $home.EudoxusAPI/credits.log -out $home.EudoxusAPI/credits.log.dat")
-            os.system("rm $home.EudoxusAPI/credits.log")
+            os.system("rm ~/.EudoxusAPI/credits.log")
+    return
 
 def Licenses(): # well when we create the menu we have an option thats called "Licenses" well it does what it says shows you the licenses
     Line_window = Toplevel(root)
@@ -358,25 +359,22 @@ def Licenses(): # well when we create the menu we have an option thats called "L
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.""").pack()
 
-def check(): # checking the anwser
-    if username or password == NULL :
-        question = messagebox.showerror("Error","You didn't gave us your username or password or none of them")
-        PreMain()
-    else:
-        secwind.destroy()
-        Encrypt()
-        Main()
-
-def PreMain1():# Just a message box to ask the user
-    global question
-    question = messagebox.askyesno("QUESTION","Do you want to save your password and username so you don't have to login again?")
-    question2 = messagebox.showwarning("Attention !","On a moment you will see your browser poping up and doing stuff automatically , dont worry this is just a normal process of this program")
-    PreMain()
+def check(secwind1): # checking the anwser
+    if username == None :
+        if password == None :
+            question = messagebox.showerror("Error","You didn't gave us your username or password or none of them")
+            PreMain()
+        else:
+            secwind1.destroy()
+            Encrypt()
+            Main()
 
 def PreMain(): # here we are capturing (while we are asking the user) for his password and username if they dont want there credentials to be saved in there disk (and yes they are encrypted) we go to the Main code in which is the def Main()
     if question == 1:
         global password
         global username
+        password = None
+        username = None
         secwind = Toplevel(root)
         secwind.title("Login")
         secwind.geometry("350x100")
@@ -386,11 +384,16 @@ def PreMain(): # here we are capturing (while we are asking the user) for his pa
         password = Entry(secwind, show="*", width= 20)
         username.pack()
         password.pack()
-        button = Button(secwind, text="Done", command = check)
+        button = Button(secwind, text="Done", command = lambda : check(secwind))
         button.pack()
     else:
         Main()
 
+def PreMain1():# Just a message box to ask the user
+    global question
+    question = messagebox.askyesno("QUESTION","Do you want to save your password and username so you don't have to login again?")
+    question2 = messagebox.showwarning("Attention !","On a moment you will see your browser poping up and doing stuff automatically , dont worry this is just a normal process of this program")
+    PreMain()
 
 if(platform.system() == 'Windows'): #here we download eudoxus image from the main url of eudoxus plus we create a directory where we save some data for later use
     os.system("mkdir C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI")
