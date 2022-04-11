@@ -364,6 +364,7 @@ def check(): # checking the anwser
         PreMain()
     else:
         secwind.destroy()
+        Encrypt()
         Main()
 
 def PreMain1():# Just a message box to ask the user
