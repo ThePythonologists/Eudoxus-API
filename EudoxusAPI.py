@@ -346,7 +346,7 @@ def Encrypt(user,passwd):
     if(checkos == 'Windows'):
         os.chdir(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI")
         with open('credits.log','w') as fp:
-            fp.writelines([user,passwd])
+            fp.write(user + '\n' + passwd)
         Halo = Fernet.generate_key()
         with open('other.logs', 'wb') as maybekey:
             maybekey.write(Halo)
@@ -363,7 +363,7 @@ def Encrypt(user,passwd):
     if checkos == 'Linux':
         os.chdir(f"/home/{whoami}/.EudoxusAPI")
         with open('credits.log','w') as fp:
-            fp.writelines([user,passwd])
+            fp.write(user + '\n' + passwd)
         Halo = Fernet.generate_key()
         with open('other.logs', 'wb') as maybekey:
             maybekey.write(Halo)
