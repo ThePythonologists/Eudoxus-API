@@ -503,6 +503,22 @@ if checkos == 'Windows':
 
 image = Label(root, image = img)
 
+def Remover():
+    if(checkos == 'Windows'):
+        os.chdir(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI")
+        if os.path.exists((f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\credits.log")) == True:
+            os.system(f"del C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\credits.log")
+            os.system(f"del C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\other.logs")
+        else:
+            messagebox.showerror("Error","You are not logged in !")
+    if checkos == 'Linux':
+        os.chdir(f"/home/{whoami}/.EudoxusAPI/")
+        if os.path.exists(f"/home/{whoami}/.EudoxusAPI/credits.log.enc") == True :
+            os.system(f"rm /home/{whoami}/.EudoxusAPI/credits.log.enc")
+            os.system(f"rm /home/{whoami}/.EudoxusAPI/other.logs")
+        else:
+            messagebox.showerror("Error","You are not logged in !")
+
 #adding/configuring some buttons here
 button = Button(root, text="Login to Eudoxus", command = PreMain1)
 button1 = Button(root, text="Exit", command = exit)
@@ -519,9 +535,9 @@ button3.place(x=10, y = 450)
 menubar = Menu(root)
 root.config(menu=menubar)
 about = Menu(menubar)
-menubar.add_cascade(label='About', menu = about)
-about.add_command(label="Licenses", command = Licenses)
-about.add_separator()
+menubar.add_cascade(label='Options', menu = about)
+about.add_command(label="View Licenses", command = Licenses)
+about.add_command(label="Remove saved data", command = Remover)
 about.add_command(label="Exit", command = exit)
 
 
