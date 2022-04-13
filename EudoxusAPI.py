@@ -14,6 +14,9 @@ from PIL import Image, ImageTk
 from cryptography.fernet import Fernet
 import sys
 
+whoami = getpass.getuser()
+checkos = platform.system()
+
 ## install: sudo apt install python3-pyvirtualdisplay
 #from pyvirtualdisplay import Display
 #display = Display(visible=0, size=(1680,1050))
@@ -294,9 +297,11 @@ def Main():
 
  #driver.quit()
 def Decrypt():
+
     if(platform.system() == 'Windows'):
+            os.chdir(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\")
             with open('other.logs', 'rb') as maybekey:
-                Halo = maybekey.read()    
+                Halo = maybekey.read()
             fernet = Fernet(Halo)
             with open('credits.log.enc','rb') as encryptfile:
                 content = encryptfile.read()
@@ -305,8 +310,9 @@ def Decrypt():
                 dcontent.write(decrypted)
             os.system("mv credits.log C:\\Users\\%username%\\AppData\\Roaming\\Temp\\")
     if platform.system() == 'Linux':
+            os.chdir(f"/home/{whoami}/.EudoxusAPI/")
             with open('other.logs', 'rb') as maybekey:
-                Halo = maybekey.read()    
+                Halo = maybekey.read()
             fernet = Fernet(Halo)
             with open('credits.log.enc','rb') as encryptfile:
                 content = encryptfile.read()
@@ -322,9 +328,9 @@ def bookstatus():
     return
 
 def buttonpress(): # this "buttonpress" actually starts/triggers/calls the program UpdaterEu
-    if platform.system() == 'Windows': # of course we check to see if the platform is windows or linux
+    if checkos == 'Windows': # of course we check to see if the platform is windows or linux
         os.system('C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email} {books} {day}')
-    if platform.system() == 'Linux': # Cause "A linux computer is like air conditioning - it becomes useless when you open Windows. " — Linus T.
+    if checkos == 'Linux': # Cause "A linux computer is like air conditioning - it becomes useless when you open Windows. " — Linus T.
         os.system('python3 $home.EudoxusAPI/UpdaterEu.py ')
 
 def updates(): # here we create another window thats going to ask the user for there email so we can send them live updates about there books
@@ -336,13 +342,11 @@ def updates(): # here we create another window thats going to ask the user for t
     text.pack()
     Button(Updateswindow, text="Done", command=buttonpress).pack()# this part is where we start another program (UpdaterEu.py)
 
-def Encrypt():
-    if(platform.system() == 'Windows'):
-        whoami = getpass.getuser()
-        os.chdir(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\")
+def Encrypt(user,passwd):
+    if(checkos == 'Windows'):
+        os.chdir(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI")
         with open('credits.log','w') as fp:
-            fp.write(username,"/n")
-            fp.write(password)
+            fp.writelines([user,passwd])
         Halo = Fernet.generate_key()
         with open('other.logs', 'wb') as maybekey:
             maybekey.write(Halo)
@@ -355,13 +359,11 @@ def Encrypt():
         with open('credits.log.enc','wb') as encryptfile:
             encryptfile.write(encrypt)
         os.system("del C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log")
-    if platform.system() == 'Linux':
-        whoami = getpass.getuser()
-        os.chdir(f"/home/{whoami}/.EudoxusAPI/")
+
+    if checkos == 'Linux':
+        os.chdir(f"/home/{whoami}/.EudoxusAPI")
         with open('credits.log','w') as fp:
-            fp.write(username)
-            fp.write("/n")
-            fp.write(password)
+            fp.writelines([user,passwd])
         Halo = Fernet.generate_key()
         with open('other.logs', 'wb') as maybekey:
             maybekey.write(Halo)
@@ -401,33 +403,36 @@ def Licenses(): # well when we create the menu we have an option thats called "L
 def check(user,passw): # checking the anwser
     username1 = len(user.get())
     password1 = len(passw.get())
+    username = str(user.get())
+    password = str(passw.get())
+    print(username, password)
     if username1 == 0 or password1 == 0 :
             question = messagebox.showerror("Error","You didn't gave us your username or password or none of them")
             PreMain()
     else:
         secwind.destroy()
-        if platform.system() == 'Linux':
-            whoami = getpass.getuser()
+        if checkos == 'Linux':
+
             os.chdir(f"/home/{whoami}/.EudoxusAPI/")
-            if os.path.isfile(f"/home/{whoami}/.EudoxusAPI/credits.log.enc") == True :
+            if os.path.exists(f"/home/{whoami}/.EudoxusAPI/credits.log.enc") == True :
                 Decrypt()
             else:
-                Encrypt()
-        if(platform.system() == 'Windows'):
-            whoami = getpass.getuser()
+                Encrypt(username,password)
+        if(checkos == 'Windows'):
+
             os.chdir(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\")
-            if os.path.isfile(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\credits.log.enc") == True :
+            if os.path.exists(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\credits.log.enc") == True :
                 Decrypt()
             else:
-                Encrypt()
+                Encrypt(username,password)
 
         Main()
 
 def PreMain(): # here we are capturing (while we are asking the user) for his password and username if they dont want there credentials to be saved in there disk (and yes they are encrypted) we go to the Main code in which is the def Main()
+    global secwind
+    global password
+    global username
     if question == 1:
-        global password
-        global username
-        global secwind
         secwind = Toplevel(root)
         secwind.title("Login")
         secwind.geometry("350x100")
@@ -435,8 +440,6 @@ def PreMain(): # here we are capturing (while we are asking the user) for his pa
         Label(secwind, text = "password").place(x=0, y=25)
         usernamewiget = Entry(secwind, width= 20)
         passwordwiget = Entry(secwind, show="*", width= 20)
-        username = usernamewiget.get()
-        password = passwordwiget.get()
         butt0n = Button(secwind, text="Done", command = lambda: check(usernamewiget,passwordwiget))
         usernamewiget.pack()
         passwordwiget.pack()
@@ -444,37 +447,58 @@ def PreMain(): # here we are capturing (while we are asking the user) for his pa
     else:
         Main()
 
-def PreMain1():# Just a message box to ask the user
+def PreMain1():
+    global username,password             # We check if the credits.log.enc exists or not so we dont ask the user to enter his credentials
     global question
-    question = messagebox.askyesno("QUESTION","Do you want to save your password and username so you don't have to login again?")
     question2 = messagebox.showwarning("Attention !","On a moment you will see your browser poping up and doing stuff automatically , dont worry this is just a normal process of this program")
+    if checkos == 'Windows' and os.path.exists("C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\credits.log.enc") == True:
+        Decrypt()
+        os.chdir(f"C:\\Users\\{whoami}\\AppData\\Roaming\\Temp")
+        with open("credits.log","rb") as reader:
+            username = reader.readline(1)
+            password = reader.readline(3)
+        Main()
+    if checkos == 'Linux' and os.path.exists(f"/home/{whoami}/.EudoxusAPI/credits.log.enc") == True :
+        Decrypt()
+        os.chdir("/tmp/000")
+        with open("credits.log","r") as reader:
+            username = reader.readline(1)
+            password = reader.readline(3)
+        Main()
+
+    question = messagebox.askyesno("QUESTION","Do you want to save your password and username so you don't have to login again?")
     PreMain()
 
-if(platform.system() == 'Windows'): #here we download eudoxus image from the main url of eudoxus plus we create a directory where we save some data for later use
-    os.system("mkdir C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI")
-    bla = "%username%"
-    os.system(f'curl -L https://service.eudoxus.gr/images/eudoxus-logo.png -o C:\\Users\\{bla}\\AppData\\Roaming\\EudoxusAPI\\logo.png')
+bla = "%username%" #here we download eudoxus image from the main url of eudoxus plus we create a directory where we save some data for later use
+if checkos == 'Windows':
+        if os.path.exists(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI") == False:
+                os.system("mkdir C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI")
+                os.system(f'curl -L https://service.eudoxus.gr/images/eudoxus-logo.png -o C:\\Users\\{bla}\\AppData\\Roaming\\EudoxusAPI\\logo.png')
+        elif os.path.exists(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\logo.png") == False:
+                os.system(f'curl -L https://service.eudoxus.gr/images/eudoxus-logo.png -o C:\\Users\\{bla}\\AppData\\Roaming\\EudoxusAPI\\logo.png')
+        else:
+                pass
+if checkos == 'Linux' :
+        if (os.path.exists(f"/home/{whoami}/.EudoxusAPI/logo.png") == False and os.path.exists(f"/home/{whoami}/.EudoxusAPI") == True):
+                os.system(f'cd /home/{whoami}/.EudoxusAPI/ && curl -L https://service.eudoxus.gr/images/eudoxus-logo.png -o logo.png' )
+        elif os.path.exists(f"/home/{whoami}/.EudoxusAPI") == False:
+                os.system('mkdir $home.EudoxusAPI && cd $home.EudoxusAPI')
+                os.system(f'cd /home/{whoami}/.EudoxusAPI/ && curl -L https://service.eudoxus.gr/images/eudoxus-logo.png -o logo.png' )
+        else:
+                pass
 
-if platform.system() == 'Linux':
-    try:
-        os.system('mkdir $home.EudoxusAPI && cd $home.EudoxusAPI')
-        os.system('curl -L https://service.eudoxus.gr/images/eudoxus-logo.png -o logo.png' )
-    except:
-        if os.system('whoami') == 'root\n0':
-            os.system('cd /root/.EudoxusAPI')
-        pass
 # some basic parameteres for the root window or GUI window like how big is going to be, title of the window and not allowing to the user change size of the window cause its going to break the style of it.
 root = Tk()
 root.geometry("500x500")
 root.wm_title('EudoxusAPI')
 root.resizable(0, 0)
-if platform.system() == 'Linux': #adding eudoxus image here and checking if it is windows or linux the platform that is running
+if checkos == 'Linux': #adding eudoxus image here and checking if it is windows or linux the platform that is running
+    os.chdir(f"/home/{whoami}/.EudoxusAPI/")
     img = ImageTk.PhotoImage(Image.open("logo.png"))
 
 
-if platform.system() == 'Windows':
-    os.system('cd C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI')
-    bla = "%username%"
+if checkos == 'Windows':
+    os.chdir(f'C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI')
     img = ImageTk.PhotoImage(Image.open("logo.png"))
 
 image = Label(root, image = img)
