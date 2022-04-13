@@ -6,11 +6,12 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from tkinter import messagebox
 import tkinter
-import os
+import os, getpass
 import platform
 from tkinter import *
 import requests
 from PIL import Image, ImageTk
+from cryptography.fernet import Fernet
 import sys
 
 ## install: sudo apt install python3-pyvirtualdisplay
@@ -294,10 +295,22 @@ def Main():
  #driver.quit()
 def Decrypt():
     if(platform.system() == 'Windows'):
-            os.system("cipher /A /D C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log")
+            fernet = Fernet(Halo)
+            with open('credits.log.enc','rb') as encryptfile:
+                content = encryptfile.read()
+            decrypted = fernet.decrypt(content)
+            with open('credits.log', 'wb') as dcontent:
+                dcontent.write(decrypted)
+            os.system("mv credits.log C:\\Users\\%username%\\AppData\\Roaming\\Temp\\")
     if platform.system() == 'Linux':
-            os.system(" openssl enc -aes-256-cbc -d -in $home.EudoxusAPI/credits.log.dat -out $home.EudoxusAPI/credits.log")
-
+            fernet = Fernet(Halo)
+            with open('credits.log.enc','rb') as encryptfile:
+                content = encryptfile.read()
+            decrypted = fernet.decrypt(content)
+            with open('credits.log', 'wb') as dcontent:
+                dcontent.write(decrypted)
+            os.system('mkdir /tmp/000')
+            os.system('mv credits.log /tmp/000/')
 def exit():
     sys.exit()
 #some fuctions we will use in the future later
@@ -321,20 +334,42 @@ def updates(): # here we create another window thats going to ask the user for t
 
 def Encrypt():
     if(platform.system() == 'Windows'):
-            fp = open("C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log", "w")
+        whoami = getpass.getuser()
+        os.chdir(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\")
+        with open('credits.log','w') as fp:
+            fp.write(username,"/n")
             fp.write(password)
-            fp.write(" \n")
-            fp.wite(username)
-            fp.close()
-            os.system("cipher /A /E C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log")
-            os.system("del C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log")
+        Halo = Fernet.generate_key()
+        with open('other.logs', 'wb') as maybekey:
+            maybekey.write(Halo)
+        with open('other.logs', 'rb') as maybekey:
+            maybekey2 = maybekey.read()
+        fernet = Fernet(maybekey2)
+        with open('credits.log','rb') as creditss :
+            content = creditss.read()
+        encrypt = fernet.encrypt(content)
+        with open('credits.log.enc','wb') as encryptfile:
+            encryptfile.write(encrypt)
+        os.system("del C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\credits.log")
     if platform.system() == 'Linux':
-            fp = open("~/.EudoxusAPI/credits.log", "w")
+        whoami = getpass.getuser()
+        os.chdir(f"/home/{whoami}/.EudoxusAPI/")
+        with open('credits.log','w') as fp:
+            fp.write(username)
+            fp.write("/n")
             fp.write(password)
-            fp.write(" \n")
-            fp.wite(username)
-            fp.close()
-            os.system(" openssl enc -aes-256-cbc -in $home.EudoxusAPI/credits.log -out $home.EudoxusAPI/credits.log.dat")
+        Halo = Fernet.generate_key()
+        with open('other.logs', 'wb') as maybekey:
+            maybekey.write(Halo)
+        with open('other.logs', 'rb') as maybekey:
+            maybekey2 = maybekey.read()
+        fernet = Fernet(maybekey2)
+        with open('credits.log','rb') as creditss :
+            content = creditss.read()
+        encrypt = fernet.encrypt(content)
+        with open('credits.log.enc','wb') as encryptfile:
+            encryptfile.write(encrypt)
+
             os.system("rm ~/.EudoxusAPI/credits.log")
     return
 
@@ -367,7 +402,21 @@ def check(user,passw): # checking the anwser
             PreMain()
     else:
         secwind.destroy()
-        Encrypt()
+        if platform.system() == 'Linux':
+            whoami = getpass.getuser()
+            os.chdir(f"/home/{whoami}/.EudoxusAPI/")
+            if os.path.isfile(f"/home/{whoami}/.EudoxusAPI/credits.log.enc") == True :
+                Decrypt()
+            else:
+                Encrypt()
+        if(platform.system() == 'Windows'):
+            whoami = getpass.getuser()
+            os.chdir(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\")
+            if os.path.isfile(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\credits.log.enc") == True :
+                Decrypt()
+            else:
+                Encrypt()
+
         Main()
 
 def PreMain(): # here we are capturing (while we are asking the user) for his password and username if they dont want there credentials to be saved in there disk (and yes they are encrypted) we go to the Main code in which is the def Main()
