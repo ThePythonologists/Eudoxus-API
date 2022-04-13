@@ -295,6 +295,8 @@ def Main():
  #driver.quit()
 def Decrypt():
     if(platform.system() == 'Windows'):
+            with open('other.logs', 'rb') as maybekey:
+                Halo = maybekey.read()    
             fernet = Fernet(Halo)
             with open('credits.log.enc','rb') as encryptfile:
                 content = encryptfile.read()
