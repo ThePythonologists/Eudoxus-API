@@ -206,6 +206,7 @@ def Main():
     while True:
         try:
             user_field = driver.find_element_by_id('username')
+            pass_field = driver.find_element_by_id('password')
         except:
             pass
             #print('except 6')
@@ -213,10 +214,16 @@ def Main():
             #print('finally 6')
             if user_field:
                 break
-    user_field.send_keys('')
-    pass_field = driver.find_element_by_id('password')
-    pass_field.send_keys('')
-    buttons = driver.find_elements_by_id('submitForm')[0].click()
+    global username,password
+    try:
+    	user_field.send_keys(username)
+    	pass_field.send_keys(password)
+    	buttons = driver.find_elements_by_id('submitForm')[0].click()
+    except:      
+	    user_field.send_keys('')
+	    pass_field = driver.find_element_by_id('password')
+	    pass_field.send_keys('')
+	    buttons = driver.find_elements_by_id('submitForm')[0].click()
 
 
     wait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'td')))
@@ -324,25 +331,39 @@ def Decrypt():
 def exit():
     sys.exit()
 #some fuctions we will use in the future later
-def bookstatus():
-    return
 
 def buttonpress(): # this "buttonpress" actually starts/triggers/calls the program UpdaterEu
-    if checkos == 'Windows': # of course we check to see if the platform is windows or linux
-        os.system('C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email} {books} {day}')
-    if checkos == 'Linux': # Cause "A linux computer is like air conditioning - it becomes useless when you open Windows. " — Linus T.
-        os.system('python3 $home.EudoxusAPI/UpdaterEu.py ')
+	if checkos == 'Windows':
+		if os.path.isfile(f"C:\\Users\\{whoami}\\Appdata\\Roaming\\EudoxusAPI\\date.data") == False and os.path.isfile(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt") == False:
+		 		os.system("C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email}")
+		 		PreMain1()
+		elif os.path.isfile(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt") == True:
+				os.system(f"rename C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe")	
+				os.system("C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email}")
+				PreMain1()
+		else:
+			a = messagebox.showerror("Error","You have already enabled this future")
+	if checkos == 'Linux':		
+			if os.path.isfile(f'/home/{whoami}/.EudoxusAPI/date.data') == False and os.path.isfile("/home/{whoami}/.EudoxusAPI/UpdaterEu.py.txt") == False:
+					os.system('python3 $home.EudoxusAPI/UpdaterEu.py {email}')
+					PreMain1()
+			elif os.path.isfile("/home/{whoami}/.EudoxusAPI/UpdaterEu.py.txt") == True:
+					os.system('mv $home.EudoxusAPI/UpdaterEu.py.txt $home.EudoxusAPI/UpdaterEu.py')
+					os.system('python3 $home.EudoxusAPI/UpdaterEu.py {email}')
+					PreMain1()
+			else:
+				a = messagebox.showerror("Error","You have already enabled this future")
 
 def updates(): # here we create another window thats going to ask the user for there email so we can send them live updates about there books
     Updateswindow = Toplevel(root)
     Updateswindow.geometry("400x100")
     Updateswindow.resizable(0, 0)
-    Updateswindow.title("Give us your email to send you updates")
+    Updateswindow.title("Give us your email to send you a reminder")
     text = Entry(Updateswindow, width= 30)
     text.pack()
     Button(Updateswindow, text="Done", command=buttonpress).pack()# this part is where we start another program (UpdaterEu.py)
 
-def Encrypt(user,passwd):
+def Encrypt(user,passwd): # here we encrypt the password
     if(checkos == 'Windows'):
         os.chdir(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI")
         with open('credits.log','w') as fp:
@@ -427,6 +448,13 @@ def check(user,passw): # checking the anwser
                 Encrypt(username,password)
 
         Main()
+def Remove_Reminder():# in a case the user doesn't want anymore the reminder 
+	if checkos == 'Windows': # of course we check to see if the platform is windows or linux
+		os.system('rename C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt')
+		done = messagebox.showinfo("Info","The Reminder was set off if you want to start it again please click on the button again")
+	if checkos == 'Linux': # Cause "A linux computer is like air conditioning - it becomes useless when you open Windows. " — Linus T.
+		os.system('mv $home.EudoxusAPI/UpdaterEu.py $home.EudoxusAPI/UpdaterEu.py.txt ')
+		done = messagebox.showinfo("Info","The Reminder was set off if you want to start it again please click on the button again")
 
 def PreMain(): # here we are capturing (while we are asking the user) for his password and username if they dont want there credentials to be saved in there disk (and yes they are encrypted) we go to the Main code in which is the def Main()
     global secwind
@@ -503,7 +531,7 @@ if checkos == 'Windows':
 
 image = Label(root, image = img)
 
-def Remover():
+def Remover(): # removing the stored unecrypted passwords and username
     if(checkos == 'Windows'):
         os.chdir(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI")
         if os.path.exists((f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\credits.log")) == True:
@@ -522,15 +550,13 @@ def Remover():
 #adding/configuring some buttons here
 button = Button(root, text="Login to Eudoxus", command = PreMain1)
 button1 = Button(root, text="Exit", command = exit)
-button2 = Button(root, text="Book status", command = bookstatus)
-button3 = Button(root, text="Give me live-updates", command =updates)
+button3 = Button(root, text="Give me a reminder", command =updates)
 
 # placing my buttons on the GUI app
 image.place(x = 70, y = 70)
-button.place(x=285, y=450)
+button.place(x=305, y=450)
 button1.place(x=425, y=450)
-button2.place(x=180, y=450)
-button3.place(x=10, y = 450)
+button3.place(x=180, y = 450)
 #here we create a menu where we added an "About" options for viewing licenses and exit (this menu will become usefull in the future)
 menubar = Menu(root)
 root.config(menu=menubar)
@@ -538,6 +564,7 @@ about = Menu(menubar)
 menubar.add_cascade(label='Options', menu = about)
 about.add_command(label="View Licenses", command = Licenses)
 about.add_command(label="Remove saved data", command = Remover)
+about.add_command(label="Remove Reminder", command = Remove_Reminder)
 about.add_command(label="Exit", command = exit)
 
 
