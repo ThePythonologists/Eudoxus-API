@@ -81,14 +81,14 @@ def email1():
 		try:
 			ouremail='no_reply_eudoxusapi@outlook.com'
 			receiver= email
-			password='!!EudoxusAPI1821'
+			password="!!EudoxusAPI1821"
 			smtp_server=smtplib.SMTP("smtp.office365.com",587)
 			smtp_server.ehlo()
 			smtp_server.starttls()
 			smtp_server.ehlo()
 			smtp_server.login(ouremail,password)
 			now = date.today()
-			msg_to_be_sent =(f'''This is Eudoxus API and we inform that from {date2} and {now} is been 1 day and you have to take your books!!!''')
+			msg_to_be_sent =(f"""This is Eudoxus API and we inform that from {date2} and {now} is been 1 day and you have to take your books!!!""")
 			smtp_server.sendmail(ouremail,receiver,msg_to_be_sent)
 			smtp_server.quit()
 		except Exception as errorcode:
