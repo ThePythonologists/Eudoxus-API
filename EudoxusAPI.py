@@ -219,7 +219,7 @@ def Main():                                              #This function is using
     buttons = driver.find_elements_by_id('submitForm')[0].click()
 
 
-    wait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'td')))
+    wait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'td')))     #The next step is that the driver passes the sso (authentication system) and searches for the "Δηλώσεις συγγραμμάτων" in order to click the page.
     td = driver.find_elements_by_tag_name('td')[:10]
     out = {}
     for i,n in enumerate(td):
@@ -233,7 +233,7 @@ def Main():                                              #This function is using
         print('{0} {1}'.format(n, out[n]))
     print('\n')
 
-    l = driver.find_elements_by_tag_name('a')
+    l = driver.find_elements_by_tag_name('a')      
     #help(l[0])
     for n in l:
         if 'υποβολής' in n.text:
@@ -277,7 +277,7 @@ def Main():                                              #This function is using
     #### Data Extraction and Click ####
     ###################################
 
-    data = get_history_table_and_buttons(driver)
+    data = get_history_table_and_buttons(driver)   #Once the def get_history_table_and_button find the specific elements it saves it in a numerous list and prints the element key. In which case we take the key and search through the whole html to locate it and tell the driver to click it
 
     if data:
         print('\n\n', data)
