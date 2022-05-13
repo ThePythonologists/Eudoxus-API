@@ -39,8 +39,8 @@ def to_dict(a):
 #### in order to proceed to the next urls   ####
 ################################################
 
-def get_history_table_and_buttons(driver):
-    ''' reads the history table and returns a list of lists
+def get_history_table_and_buttons(driver):                                              #This specific function called get_history_table_and_buttons(driver) reads the history table and returns a list with things such as buttons. The fuction searches through lists, arrays and tds in html format to find the  element button in order to save it for the selenium driver.
+    ''' reads the history table and returns a list of lists                             
         Each inner list contains:
                 Ημερομηνία - text
                 Έτος       - text
@@ -76,7 +76,7 @@ def get_history_table_and_buttons(driver):
             out.append(new_td)
     return out
 
-def continue_driver(driver):
+def continue_driver(driver):                                                          #This function does the same thing as the history and buttons function.
     ''' reads the available lists and returns them
         The specific one contains:
                Button - text (Συνέχεια)
@@ -111,7 +111,7 @@ def continue_driver(driver):
     return out
 
 
-def Main():
+def Main():                                              #This function is using the selenium driver in order to track the urls and click them for the user.
 
     driver = webdriver.Firefox()
 
@@ -119,7 +119,7 @@ def Main():
     driver.get(url)
 
     #sleep(.1)
-    wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')
+    wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')     #using the sleep mode in selenium we give some time for the driver to search the buttons and afterwards will click them.
     while True:
         try:
             driver.find_element_by_link_text('Έλεγχος Εισόδου Φοιτητή').click()
@@ -135,7 +135,7 @@ def Main():
 
     while True:
         try:
-            driver.find_element_by_link_text('εδώ').click()
+            driver.find_element_by_link_text('εδώ').click()   #the driver clicks the button "εδώ" in the eudoxus site.
         except:
             pass
             #print('except 2')
@@ -144,7 +144,7 @@ def Main():
             break
     while True:
         try:
-            driver.find_element_by_link_text('Ελληνικά').click()
+            driver.find_element_by_link_text('Ελληνικά').click()        #the driver changes the language from english to greek
         except:
             pass
             #print('except 3')
@@ -159,7 +159,7 @@ def Main():
 
     while True:
         try:
-            arrow = driver.find_elements_by_class_name('select2-selection__arrow')
+            arrow = driver.find_elements_by_class_name('select2-selection__arrow')   #The driver is looking for an element by a specific class name in order to click it from the drop-down menu
         except:
             pass
             #print('except 4')
@@ -175,7 +175,7 @@ def Main():
 
     while True:
         try:
-            li = driver.find_elements_by_tag_name('li')
+            li = driver.find_elements_by_tag_name('li')    #If the drivers find the value of the class then proceeds to the next page
         except:
             pass
             #print('except 5')
@@ -201,7 +201,7 @@ def Main():
                 break
 
     #sleep(.1)
-    wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')
+    wait(driver, 10).until(lambda d: d.execute_script('return document.readyState') == 'complete')   #Here, the frontend passes the keys (username & password) from the user and fills it in the specific form which uses Shibboleth.sso from the selected university.
     #driver.refresh()
     while True:
         try:
