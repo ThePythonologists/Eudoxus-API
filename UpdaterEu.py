@@ -88,7 +88,7 @@ def email1():
 			smtp_server.ehlo()
 			smtp_server.login(ouremail,password)
 			now = date.today()
-			msg_to_be_sent =(f"""This is Eudoxus API and we inform that from {date2} and {now} is been 1 day and you have to take your books!!!""")
+			msg_to_be_sent =(f"This is Eudoxus API and we inform that from {date2} and {now} is been 1 day and you have to take your books!!!")
 			smtp_server.sendmail(ouremail,receiver,msg_to_be_sent)
 			smtp_server.quit()
 		except Exception as errorcode:
