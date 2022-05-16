@@ -335,11 +335,11 @@ def exit():
 def buttonpress(): # this "buttonpress" actually starts/triggers/calls the program UpdaterEu
 	if checkos == 'Windows':
 		if os.path.isfile(f"C:\\Users\\{whoami}\\Appdata\\Roaming\\EudoxusAPI\\date.data") == False and os.path.isfile(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt") == False:
-		 		os.system("C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email}")
+		 		os.system(f"C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email}")
 		 		PreMain1()
 		elif os.path.isfile(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt") == True:
 				os.system(f"rename C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe")	
-				os.system("C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email}")
+				os.system(f"C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email}")
 				PreMain1()
 		else:
 			a = messagebox.showerror("Error","You have already enabled this future")
@@ -347,9 +347,9 @@ def buttonpress(): # this "buttonpress" actually starts/triggers/calls the progr
 			if os.path.isfile(f'/home/{whoami}/.EudoxusAPI/date.data') == False and os.path.isfile("/home/{whoami}/.EudoxusAPI/UpdaterEu.py.txt") == False:
 					os.system('python3 $home.EudoxusAPI/UpdaterEu.py {email}')
 					PreMain1()
-			elif os.path.isfile("/home/{whoami}/.EudoxusAPI/UpdaterEu.py.txt") == True:
+			elif os.path.isfile(f"/home/{whoami}/.EudoxusAPI/UpdaterEu.py.txt") == True:
 					os.system('mv $home.EudoxusAPI/UpdaterEu.py.txt $home.EudoxusAPI/UpdaterEu.py')
-					os.system('python3 $home.EudoxusAPI/UpdaterEu.py {email}')
+					os.system(f"python3 $home.EudoxusAPI/UpdaterEu.py {email}")
 					PreMain1()
 			else:
 				a = messagebox.showerror("Error","You have already enabled this future")
