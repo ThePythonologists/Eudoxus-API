@@ -341,6 +341,7 @@ def buttonpress(): # this "buttonpress" actually starts/triggers/calls the progr
 				os.system(f"rename C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe")	
 				os.system(f"C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email}")
 				PreMain1()
+		elif 
 		else:
 			a = messagebox.showerror("Error","You have already enabled this future")
 	if checkos == 'Linux':		
