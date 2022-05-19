@@ -221,7 +221,7 @@ def Main():
     	user_field.send_keys(username)
     	pass_field.send_keys(password)
     	buttons = driver.find_elements_by_id('submitForm')[0].click()
-    except:      
+    except:
 	    user_field.send_keys('')
 	    pass_field = driver.find_element_by_id('password')
 	    pass_field.send_keys('')
@@ -336,18 +336,23 @@ def exit():
 
 def buttonpress(): # this "buttonpress" actually starts/triggers/calls the program UpdaterEu
 	if checkos == 'Windows':
+        if os.path.isfile(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt") == False and os.path.isfile(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe") == False:
+            os.system("curl -L https://download2271.mediafire.com/pcupxntpv4fg/02k3y2w719hmri1/UpdaterEU.exe -o C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEU.exe")
+
 		if os.path.isfile(f"C:\\Users\\{whoami}\\Appdata\\Roaming\\EudoxusAPI\\date.data") == False and os.path.isfile(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt") == False:
 		 		os.system(f"C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email}")
 		 		PreMain1()
 		elif os.path.isfile(f"C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt") == True:
-				os.system(f"rename C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe")	
+				os.system(f"rename C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe")
 				os.system(f"C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe {email}")
 				PreMain1()
-		elif 
+		elif
 		else:
 			a = messagebox.showerror("Error","You have already enabled this future")
-	if checkos == 'Linux':		
-			if os.path.isfile(f'/home/{whoami}/.EudoxusAPI/date.data') == False and os.path.isfile("/home/{whoami}/.EudoxusAPI/UpdaterEu.py.txt") == False:
+	if checkos == 'Linux':
+            if and os.path.isfile(f"/home/{whoami}/.EudoxusAPI/UpdaterEu.py.txt") == False and  and os.path.isfile(f"/home/{whoami}/.EudoxusAPI/UpdaterEu.py") == False:
+                os.system(f"curl -L https://download1498.mediafire.com/sgexy6qhlzag/5y4jnl8i006erce/UpdaterEU.py -o /home/{whoami}/.EudoxusAPI/UpdaterEU.py")
+			if os.path.isfile(f'/home/{whoami}/.EudoxusAPI/date.data') == False and os.path.isfile(f"/home/{whoami}/.EudoxusAPI/UpdaterEu.py.txt") == False:
 					os.system('python3 $home.EudoxusAPI/UpdaterEu.py {email}')
 					PreMain1()
 			elif os.path.isfile(f"/home/{whoami}/.EudoxusAPI/UpdaterEu.py.txt") == True:
@@ -451,7 +456,7 @@ def check(user,passw): # checking the anwser
                 Encrypt(username,password)
 
         Main()
-def Remove_Reminder():# in a case the user doesn't want anymore the reminder 
+def Remove_Reminder():# in a case the user doesn't want anymore the reminder
 	if checkos == 'Windows': # of course we check to see if the platform is windows or linux
 		os.system('rename C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe C:\\Users\\%username%\\AppData\\Roaming\\EudoxusAPI\\UpdaterEu.exe.txt')
 		done = messagebox.showinfo("Info","The Reminder was set off if you want to start it again please click on the button again")
