@@ -16,6 +16,8 @@ import sys
 
 whoami = getpass.getuser()
 checkos = platform.system()
+password = None
+username = None
 
 ## install: sudo apt install python3-pyvirtualdisplay
 #from pyvirtualdisplay import Display
@@ -477,7 +479,7 @@ def PreMain(): # here we are capturing (while we are asking the user) for his pa
         Main()
 
 def PreMain1():
-    global username,password             # We check if the credits.log.enc exists or not so we dont ask the user to enter his credentials
+    # We check if the credits.log.enc exists or not so we dont ask the user to enter his credentials
     global question
     question2 = messagebox.showwarning("Attention !","On a moment you will see your browser poping up and doing stuff automatically , dont worry this is just a normal process of this program")
     if checkos == 'Windows' and os.path.exists("C:\\Users\\{whoami}\\AppData\\Roaming\\EudoxusAPI\\credits.log.enc") == True:
