@@ -79,9 +79,9 @@ def save_days():
 def email1():
 		global date2
 		try:
-			ouremail='no_reply_eudoxusapi@outlook.com'
+			ouremail=''
 			receiver= email
-			password="!!EudoxusAPI1821"
+			password=""
 			smtp_server=smtplib.SMTP("smtp.office365.com",587)
 			smtp_server.ehlo()
 			smtp_server.starttls()
