@@ -10,4 +10,4 @@ secure-smtplib==0.1.1
 getpass4==0.0.14.1 
 email-to==0.1.0 
 Django==4.0.10
-cryptography==39.0.1
+cryptography==41.0.0
