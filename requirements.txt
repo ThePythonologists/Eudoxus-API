@@ -4,7 +4,7 @@ tk==0.1.0
 os-sys==2.1.4 
 crypto==1.4.1 
 lib-platform==1.2.7
-requests==2.27.1 
+requests==2.31.0 
 Pillow==9.1.1
 secure-smtplib==0.1.1 
 getpass4==0.0.14.1 
